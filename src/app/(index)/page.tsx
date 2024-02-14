@@ -1,6 +1,6 @@
-import Footer from "./_components/Footer";
-import Header from "./_components/Header";
-import HomeHero from "./_components/HomeHero";
+import Footer from "./_components/footer";
+import Header from "./_components/header";
+import HomeHero from "./_components/homeHero";
 
 const IndexPage = () => {
 	return (
