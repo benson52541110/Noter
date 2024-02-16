@@ -7,12 +7,16 @@ import { PlusCircle } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "@root/convex/_generated/api";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const Files = () => {
+const Notes = () => {
+	const router = useRouter();
 	const { user } = useUser();
-	const create = useMutation(api.files.create);
+	const create = useMutation(api.notes.create);
 	const handleCreate = () => {
-		const promise = create({ title: "Untitled" });
+		const promise = create({ title: "Untitled" }).then((noteId) => {
+			router.push(`/notes/${noteId}`);
+		});
 		toast.promise(promise, {
 			loading: "Creating note...",
 			success: "Note created",
@@ -33,4 +37,4 @@ const Files = () => {
 	);
 };
 
-export default Files;
+export default Notes;

@@ -1,13 +1,13 @@
-import { ChevronsLeft, PlusCircle, Search } from "lucide-react";
+import { ChevronsLeft, PlusCircle, Search, Settings } from "lucide-react";
 import { toast } from "sonner";
 import Item from "./Item";
 import UserItem from "./UserItem";
-import { useQuery, useMutation } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@root/convex/_generated/api";
+import NoteList from "./noteList";
 
 const Navigation = ({ toggleSidebar }) => {
-	const files = useQuery(api.files.getSidebar);
-	const create = useMutation(api.files.create);
+	const create = useMutation(api.notes.create);
 	const handleCreate = () => {
 		const promise = create({ title: "Untitled" });
 		toast.promise(promise, {
@@ -31,6 +31,7 @@ const Navigation = ({ toggleSidebar }) => {
 				<div>
 					<UserItem></UserItem>
 					<Item label="Search" icon={Search} isSearch onClick={() => {}}></Item>
+					<Item label="Settings" icon={Settings} onClick={() => {}}></Item>
 					<Item
 						onClick={handleCreate}
 						label="New Page"
@@ -38,9 +39,7 @@ const Navigation = ({ toggleSidebar }) => {
 					></Item>
 				</div>
 				<div className="mt-4">
-					{files?.map((file) => (
-						<p key={file._id}>{file.title}</p>
-					))}
+					<NoteList />
 				</div>
 				<div className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute  h-full w-1 bg-primary/5 right-0 top-0"></div>
 			</aside>

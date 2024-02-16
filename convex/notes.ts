@@ -5,7 +5,7 @@ import { Doc, Id } from "./_generated/dataModel";
 export const create = mutation({
 	args: {
 		title: v.string(),
-		parentDocumentId: v.optional(v.id("files")),
+		parentNote: v.optional(v.id("notes")),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
@@ -13,10 +13,10 @@ export const create = mutation({
 			throw new Error("Unauthenticated");
 		}
 		const userId = identity.subject;
-		const file = await ctx.db.insert("files", {
+		const file = await ctx.db.insert("notes", {
 			title: args.title,
 			userId,
-			parentDocumentId: args.parentDocumentId,
+			parentNote: args.parentNote,
 			isArchived: false,
 			isPublished: false,
 		});
@@ -26,15 +26,23 @@ export const create = mutation({
 
 export const getSidebar = query({
 	args: {
-		parentDocumentId: v.optional(v.id("files")),
+		parentNote: v.optional(v.id("notes")),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
 		if (!identity) {
 			throw new Error("Unauthenticated");
 		}
+		const userId = identity.subject;
 
-		const file = await ctx.db.query("files").collect();
-		return file;
+		const notes = await ctx.db
+			.query("notes")
+			.withIndex("by_user_parent", (q) =>
+				q.eq("userId", userId).eq("parentNote", args.parentNote)
+			)
+			.filter((q) => q.eq(q.field("isArchived"), false))
+			.order("desc")
+			.collect();
+		return notes;
 	},
 });

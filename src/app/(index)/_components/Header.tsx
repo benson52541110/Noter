@@ -35,7 +35,7 @@ const Header = () => {
 			)}
 			{isAuthenticated && !isLoading && (
 				<Button asChild>
-					<Link href="/files">
+					<Link href="/notes">
 						Enter Noter
 						<ArrowRight className="h-4 w-4 ml-1"></ArrowRight>
 					</Link>
