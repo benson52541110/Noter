@@ -1,12 +1,37 @@
-import { ChevronsLeft, PlusCircle, Search, Settings } from "lucide-react";
+import {
+	ChevronsLeft,
+	PlusCircle,
+	Plus,
+	Search,
+	Settings,
+	Trash,
+} from "lucide-react";
 import { toast } from "sonner";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import Item from "./Item";
 import UserItem from "./UserItem";
 import { useMutation } from "convex/react";
 import { api } from "@root/convex/_generated/api";
 import NoteList from "./noteList";
+import { useState, useEffect } from "react";
+import TrashBox from "./trashBox";
 
 const Navigation = ({ toggleSidebar }) => {
+	const [isMobile, setIsMobile] = useState(false);
+	useEffect(() => {
+		const resizeHandler = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		window.addEventListener("resize", resizeHandler);
+		return () => {
+			window.removeEventListener("resize", resizeHandler);
+		};
+	}, []);
+
 	const create = useMutation(api.notes.create);
 	const handleCreate = () => {
 		const promise = create({ title: "Untitled" });
@@ -40,6 +65,18 @@ const Navigation = ({ toggleSidebar }) => {
 				</div>
 				<div className="mt-4">
 					<NoteList />
+					<Item label="Add a page" icon={Plus} onClick={handleCreate}></Item>
+					<Popover>
+						<PopoverTrigger className="w-full mt-4">
+							<Item icon={Trash} label="Trash"></Item>
+						</PopoverTrigger>
+						<PopoverContent
+							className="p-0 w-72"
+							side={isMobile ? "bottom" : "right"}
+						>
+							<TrashBox />
+						</PopoverContent>
+					</Popover>
 				</div>
 				<div className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute  h-full w-1 bg-primary/5 right-0 top-0"></div>
 			</aside>
