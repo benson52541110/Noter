@@ -19,8 +19,14 @@ import { api } from "@root/convex/_generated/api";
 import NoteList from "./noteList";
 import { useState, useEffect } from "react";
 import TrashBox from "./trashBox";
+import useSearch from "@/hooks/useSearch";
+import useSettings from "@/hooks/useSettings";
+import { useParams } from "next/navigation";
 
 const Navigation = ({ toggleSidebar }) => {
+	const settings = useSettings();
+	const search = useSearch();
+	const params = useParams();
 	const [isMobile, setIsMobile] = useState(false);
 	useEffect(() => {
 		const resizeHandler = () => {
@@ -55,8 +61,17 @@ const Navigation = ({ toggleSidebar }) => {
 				</div>
 				<div>
 					<UserItem></UserItem>
-					<Item label="Search" icon={Search} isSearch onClick={() => {}}></Item>
-					<Item label="Settings" icon={Settings} onClick={() => {}}></Item>
+					<Item
+						label="Search"
+						icon={Search}
+						isSearch
+						onClick={search.onOpen}
+					></Item>
+					<Item
+						label="Settings"
+						icon={Settings}
+						onClick={settings.onOpen}
+					></Item>
 					<Item
 						onClick={handleCreate}
 						label="New Page"

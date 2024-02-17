@@ -22,7 +22,6 @@ const NoteList = ({ parentNoteId, level = 0 }: NoteListProps) => {
 		setExpanded((prev) => ({ ...prev, [noteId]: !prev[noteId] }));
 	};
 	const notes = useQuery(api.notes.getSidebar, { parentNote: parentNoteId });
-	console.log(notes);
 	const onRedirect = (noteId: string) => {
 		router.push(`/notes/${noteId}`);
 	};

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexProvider } from "@/components/providers/convex-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -42,6 +43,7 @@ export default function RootLayout({
 						disableTransitionOnChange
 					>
 						<Toaster position="bottom-center"></Toaster>
+						<ModalProvider></ModalProvider>
 						{children}
 					</ThemeProvider>
 				</ConvexProvider>
