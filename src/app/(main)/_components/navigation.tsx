@@ -12,8 +12,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import Item from "./Item";
-import UserItem from "./UserItem";
+import Item from "./item";
+import UserItem from "./userItem";
 import { useMutation } from "convex/react";
 import { api } from "@root/convex/_generated/api";
 import NoteList from "./noteList";

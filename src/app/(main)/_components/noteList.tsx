@@ -6,7 +6,7 @@ import { api } from "@root/convex/_generated/api";
 import { Doc, Id } from "@root/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { FileIcon } from "lucide-react";
-import Item from "./Item";
+import Item from "./item";
 
 interface NoteListProps {
 	parentNoteId?: Id<"notes">;
