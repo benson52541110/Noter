@@ -18,7 +18,7 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
-	const handleConfirm = (e) => {
+	const handleConfirm = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
 		onConfirm();
 	};

@@ -24,7 +24,10 @@ const TrashBox = () => {
 	const navigateToNote = (noteId: string) => {
 		router.push(`/notes/${noteId}`);
 	};
-	const handleRestore = (e, noteId: Id<"notes">) => {
+	const handleRestore = (
+		e: React.MouseEvent<HTMLElement>,
+		noteId: Id<"notes">
+	) => {
 		e.stopPropagation();
 		const promise = restore({ id: noteId });
 		toast.promise(promise, {

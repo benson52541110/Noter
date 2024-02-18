@@ -23,7 +23,7 @@ import useSearch from "@/hooks/useSearch";
 import useSettings from "@/hooks/useSettings";
 import { useParams } from "next/navigation";
 
-const Navigation = ({ toggleSidebar }) => {
+const Navigation = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
 	const settings = useSettings();
 	const search = useSearch();
 	const params = useParams();

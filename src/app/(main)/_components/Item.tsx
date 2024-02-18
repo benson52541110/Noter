@@ -54,9 +54,7 @@ const Item = ({
 	const router = useRouter();
 	const create = useMutation(api.notes.create);
 	const archive = useMutation(api.notes.archive);
-	const handleArchive = (
-		e: React.MouseEvent<HTMLDialogElement, MouseEvent>
-	) => {
+	const handleArchive = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
 		if (!id) return;
 		const promise = archive({ id });
@@ -66,11 +64,11 @@ const Item = ({
 			error: "Failed to archive note",
 		});
 	};
-	const handleExpand = (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+	const handleExpand = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
 		onExpand?.();
 	};
-	const handleCreate = (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+	const handleCreate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
 		if (!id) return;
 		const promise = create({ title: "Untitled", parentNote: id }).then(
@@ -78,7 +76,7 @@ const Item = ({
 				if (!expanded) {
 					onExpand?.();
 				}
-				// router.push(`/notes/${noteId}`);
+				router.push(`/notes/${noteId}`);
 			}
 		);
 		toast.promise(promise, {
