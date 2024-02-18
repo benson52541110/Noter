@@ -58,11 +58,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 				<ResizableHandle style={{ display: showSidebar ? "block" : "none" }} />
 				<ResizablePanel order={2}>
 					{!!params.noteId ? (
-						<Navbar
-							isShowSidebar={showSidebar}
-							isCollapsed={true}
-							toggleSidebar={toggleSidebar}
-						/>
+						<Navbar isShowSidebar={showSidebar} toggleSidebar={toggleSidebar} />
 					) : (
 						<nav className="bg-transparent px-3 py-2">
 							{!showSidebar && (

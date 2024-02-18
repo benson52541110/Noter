@@ -1,6 +1,7 @@
 "use client";
 
 import { SettingModal } from "@/components/modals/settingModal";
+import { CoverImageModal } from "@/components/modals/converImageModal";
 import { useEffect, useState } from "react";
 
 export const ModalProvider = () => {
@@ -13,6 +14,7 @@ export const ModalProvider = () => {
 	return (
 		<>
 			<SettingModal />
+			<CoverImageModal />
 		</>
 	);
 };

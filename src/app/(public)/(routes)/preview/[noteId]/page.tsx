@@ -17,10 +17,7 @@ interface NoteIdPageProps {
 }
 
 const NoteIdPage = ({ params }: NoteIdPageProps) => {
-	// const Editor = useMemo(
-	// 	() => dynamic(() => import("@/components/editor"), { ssr: false }),
-	// 	[]
-	// );
+	//   const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }) ,[]);
 
 	const note = useQuery(api.notes.getDataById, {
 		noteId: params.noteId,
@@ -57,10 +54,14 @@ const NoteIdPage = ({ params }: NoteIdPageProps) => {
 
 	return (
 		<div className="pb-40">
-			<Cover url={note.coverImage} />
+			<Cover preview url={note.coverImage} />
 			<div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-				<Toolbar initialData={note} />
-				{/* <Editor onChange={onChange} initialContent={note.content} /> */}
+				<Toolbar preview initialData={note} />
+				{/* <Editor
+          editable={false}
+          onChange={onChange}
+          initialContent={note.content}
+        /> */}
 			</div>
 		</div>
 	);

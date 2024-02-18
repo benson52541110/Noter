@@ -222,3 +222,99 @@ export const getDataById = query({
 		return note;
 	},
 });
+
+export const update = mutation({
+	args: {
+		id: v.id("notes"),
+		title: v.optional(v.string()),
+		content: v.optional(v.string()),
+		coverImage: v.optional(v.string()),
+		icon: v.optional(v.string()),
+		isPublished: v.optional(v.boolean()),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+
+		if (!identity) {
+			throw new Error("Unauthenticated");
+		}
+
+		const userId = identity.subject;
+
+		const { id, ...rest } = args;
+
+		const existingNote = await ctx.db.get(args.id);
+
+		if (!existingNote) {
+			throw new Error("Not found");
+		}
+
+		if (existingNote.userId !== userId) {
+			throw new Error("Unauthorized");
+		}
+
+		const note = await ctx.db.patch(args.id, {
+			...rest,
+		});
+
+		return note;
+	},
+});
+
+export const removeIcon = mutation({
+	args: { id: v.id("notes") },
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+
+		if (!identity) {
+			throw new Error("Unauthenticated");
+		}
+
+		const userId = identity.subject;
+
+		const existingNote = await ctx.db.get(args.id);
+
+		if (!existingNote) {
+			throw new Error("Not found");
+		}
+
+		if (existingNote.userId !== userId) {
+			throw new Error("Unauthorized");
+		}
+
+		const note = await ctx.db.patch(args.id, {
+			icon: undefined,
+		});
+
+		return note;
+	},
+});
+
+export const removeCoverImage = mutation({
+	args: { id: v.id("notes") },
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+
+		if (!identity) {
+			throw new Error("Unauthenticated");
+		}
+
+		const userId = identity.subject;
+
+		const existingNote = await ctx.db.get(args.id);
+
+		if (!existingNote) {
+			throw new Error("Not found");
+		}
+
+		if (existingNote.userId !== userId) {
+			throw new Error("Unauthorized");
+		}
+
+		const note = await ctx.db.patch(args.id, {
+			coverImage: undefined,
+		});
+
+		return note;
+	},
+});
