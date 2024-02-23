@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@root/convex/_generated/api";
 import { useUser } from "@clerk/clerk-react";
@@ -22,7 +22,6 @@ const SearchCommand = () => {
 	const [isMounted, setIsMounted] = useState(false);
 	const { user } = useUser();
 	const router = useRouter();
-	const [search, setSearch] = useState("");
 	const notes = useQuery(api.notes.getSearch);
 
 	const toggle = useSearch((store) => store.toggle);
@@ -51,6 +50,8 @@ const SearchCommand = () => {
 		onClose();
 	};
 
+	if (!isMounted) return null;
+
 	return (
 		<CommandDialog open={isOpen} onOpenChange={onClose}>
 			<CommandInput placeholder={`Search ${user?.fullName}'s notes`} />
@@ -62,7 +63,7 @@ const SearchCommand = () => {
 							key={note._id}
 							value={`${note.title} - ${note.title}`}
 							title={note.title}
-							onSelect={handleSelect}
+							onSelect={() => handleSelect(note._id)}
 						>
 							{note.icon ? (
 								<p className="mr-2 text-sm">{note.icon}</p>
