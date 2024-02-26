@@ -78,6 +78,7 @@ const TrashBox = () => {
 						key={note._id}
 						role="button"
 						className=" text-sm rounded-sm w-full hover:bg-primary/5 flex items-center text-primary justify-between"
+						onClick={() => navigateToNote(note._id)}
 					>
 						<span className="ml-2">{note.title}</span>
 						<div className="flex items-center">
